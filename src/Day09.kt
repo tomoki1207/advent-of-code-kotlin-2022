@@ -52,10 +52,10 @@ data class Rope(val knotCount: Int) {
 
 fun main() {
 
-    fun part1(input: List<String>): Int {
+    fun countTailVisited(input: List<String>, knotCount: Int): Int {
         val steps = input.map { step -> step.split(" ").let { Pair(Motion.from(it[0]), it[1].toInt()) } }
 
-        val rope = Rope(1)
+        val rope = Rope(knotCount)
         val tailHistory = mutableSetOf<Knot>()
         steps.forEach { step ->
             repeat(step.second) {
@@ -67,20 +67,9 @@ fun main() {
         return tailHistory.size
     }
 
-    fun part2(input: List<String>): Int {
-        val steps = input.map { step -> step.split(" ").let { Pair(Motion.from(it[0]), it[1].toInt()) } }
+    fun part1(input: List<String>) = countTailVisited(input, 1)
 
-        val rope = Rope(9)
-        val tailHistory = mutableSetOf<Knot>()
-        steps.forEach { step ->
-            repeat(step.second) {
-                rope.step(step.first) {
-                    tailHistory.add(it)
-                }
-            }
-        }
-        return tailHistory.size
-    }
+    fun part2(input: List<String>) = countTailVisited(input, 9)
 
     check(part1(readInput("Day09_test")) == 13)
     check(part2(readInput("Day09_test")) == 1)
