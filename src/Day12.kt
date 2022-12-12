@@ -31,8 +31,8 @@ fun main() {
             }.toMap()
         }.toMap()
 
-        var open = LinkedList<Point>().also { it.add(start!!) }
         val closed = mutableSetOf<Point>()
+        var open = LinkedList<Point>().also { it.add(start!!) }
         var step = 0
         while (true) {
             val tmp = LinkedList<Point>()
@@ -41,32 +41,27 @@ fun main() {
                 if (determineEnd(current)) {
                     return step
                 }
-                if (closed.contains(current)) {
+                if (!closed.add(current)) {
                     continue
                 }
-                closed.add(current)
 
                 // up,down,right,left
-                if (grid[current.row - 1]?.containsKey(current.col) == true) {
-                    val up = grid[current.row - 1]!![current.col]!!
+                grid[current.row - 1]?.get(current.col)?.let { up ->
                     if (climbPredicate(current, up)) {
                         tmp.add(up)
                     }
                 }
-                if (grid[current.row + 1]?.containsKey(current.col) == true) {
-                    val down = grid[current.row + 1]!![current.col]!!
+                grid[current.row + 1]?.get(current.col)?.let { down ->
                     if (climbPredicate(current, down)) {
                         tmp.add(down)
                     }
                 }
-                if (grid[current.row]?.containsKey(current.col - 1) == true) {
-                    val left = grid[current.row]!![current.col - 1]!!
+                grid[current.row]?.get(current.col - 1)?.let { left ->
                     if (climbPredicate(current, left)) {
                         tmp.add(left)
                     }
                 }
-                if (grid[current.row]?.containsKey(current.col + 1) == true) {
-                    val right = grid[current.row]!![current.col + 1]!!
+                grid[current.row]?.get(current.col + 1)?.let { right ->
                     if (climbPredicate(current, right)) {
                         tmp.add(right)
                     }
