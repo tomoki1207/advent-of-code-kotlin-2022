@@ -62,9 +62,7 @@ fun main() {
     }
 
     val testInput = readInput("Day11_test")
-    print(part1(testInput))
     check(part1(testInput) == 10605L)
-    print(part2(testInput))
     check(part2(testInput) == 2713310158)
 
     val input = readInput("Day11")
